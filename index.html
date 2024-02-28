@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karnito-Music</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    
+</head>
+
+<body>
+    
+    <div id="app" class="wrapper">
+        <div class="player">
+            <div class="player__top">
+                <div class="player-cover">
+                    <div class="player-cover__item">
+                        <img :src="currentTrack.cover" alt="Cover Image" class="player-cover__img">
+                    </div>
+                </div>
+                <div class="player-controls">
+                    <div class="player-controls__item" @click="prevTrack"><i class="icon fas fa-step-backward"></i></div>
+                    <div class="player-controls__item" @click="play">
+                        <i class="icon" :class="isTimerPlaying ? 'fas fa-pause' : 'fas fa-play'"></i>
+                    </div>
+                    <div class="player-controls__item" @click="nextTrack"><i class="icon fas fa-step-forward"></i></div>
+                    <div class="player-controls__item -favorite" :class="{ active: currentTrack.favorited }" @click="favorite"><i class="icon fas fa-heart"></i></div>
+                    
+                </div>
+            </div>
+            <div class="progress" @click="clickProgress">
+                <div class="progress__top">
+                    <div class="progress__duration">{{ duration }}</div>
+                    <div class="progress__time">{{ currentTime }}</div>
+                </div>
+                <div class="progress__bar">
+                    <div class="progress__current" :style="{ width: barWidth }"></div>
+                </div>
+            </div>
+            <div class="album-info">
+                <div class="album-info__name">{{ currentTrack.name }}</div>
+                <div class="album-info__track">{{ currentTrack.artist }}</div>
+            </div>
+            
+            <div class="container">
+                <button class="shrink-border" @click="showAll">All Songs</button>
+                <button class="material-bubble" @click="showFavorites">Favorite Songs</button>
+            </div>
+            <div class="song-list">
+                <div v-if="showAllSongs">
+                    <button v-for="(track, index) in tracks" :key="index" @click="playTrack(index)" class="song-button">
+                        {{ track.name }} - {{ track.artist }}
+                    </button>
+                </div>
+                <div v-if="showFavoriteSongs">
+                    <button v-for="(track, index) in favoriteSongs" :key="index" @click="playTrack(index)" class="song-button">
+                        {{ track.name }} - {{ track.artist }}
+                    </button>
+                </div>
+        </div>
+        
+        
+    </div>
+    
+ 
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
